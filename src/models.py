@@ -7,23 +7,43 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
+class User(Base):
+    __tablename__ = 'users'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    name = Column(String(250), nullable=False)
+    username = Column(String,unique=True, nullable=False)
+    password=Column(String,nullable=False)
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
-    id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+class Film(Base):
+    __tablename__ ="films"
+    id =Column(Integer,primary_key=True)
+    Name = Column(String)
+    Duration = Column(String)
+    Director = Column(String)
+    planets=Column(Integer,ForeignKey("planets.id"))
+    vehicles=Column(Integer,ForeignKey("vehicles.id"))
+    characters=Column(Integer,ForeignKey("person.id"))
+
+class Planet(Base):
+    __tablename__ ="planets"
+    id =Column(Integer,primary_key=True)
+    population = Column(String)
+    clime = Column(String)
+    color = Column(String)
+    name = Column(String)
+    homeworld=Column(Integer,ForeignKey("planets.id"))
+
+class Vehicle(Base):
+    __tablename__ ="vechicles"
+    id =Column(Integer,primary_key=True)
+    name = Column(String)
+    model = Column(String)
+    color = Column(String)
+    pilots = Column(String,ForeignKey("person.id"))
+
+
+
 
     def to_dict(self):
         return {}
